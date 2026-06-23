@@ -2347,6 +2347,17 @@ body {
 	margin-top: 34px;
 }
 
+.cases-cta {
+	display: flex;
+	justify-content: center;
+	margin-top: clamp(24px, 3vw, 38px);
+}
+
+.cases-cta .btn {
+	width: min(100%, 980px);
+	min-height: 58px;
+}
+
 .case-card {
 	display: grid;
 	overflow: hidden;
