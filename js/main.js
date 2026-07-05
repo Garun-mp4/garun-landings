@@ -219,6 +219,12 @@ const calcState = {
   result: null,
 };
 
+const ESTIMATE_DISCOUNT = 0.8;
+const TARIFF_THRESHOLDS = {
+  startMax: 60000 * ESTIMATE_DISCOUNT,
+  standardMax: 95000 * ESTIMATE_DISCOUNT,
+};
+
 const formatRub = (value) => new Intl.NumberFormat('ru-RU').format(Math.round(value / 1000) * 1000);
 
 function qs(selector, root = document) {
@@ -613,9 +619,9 @@ function calculateEstimate() {
   }, 0);
   const contentAdd = { ready: 0, structure: 9000, texts: 12000, materials: 16000 }[a.content] || 0;
   const urgency = a.deadline === 'fast' ? 1.2 : 1;
-  const low = (base + blockAdd + designAdd + featureAdd + contentAdd) * urgency;
+  const low = (base + blockAdd + designAdd + featureAdd + contentAdd) * urgency * ESTIMATE_DISCOUNT;
   const high = low * 1.28;
-  const tariff = high < 60000 ? 'Старт' : high < 95000 ? 'Стандарт' : 'Расширенный';
+  const tariff = high < TARIFF_THRESHOLDS.startMax ? 'Старт' : high < TARIFF_THRESHOLDS.standardMax ? 'Стандарт' : 'Расширенный';
   const includes = tariff === 'Старт'
     ? 'В проект войдут базовые блоки, адаптивная верстка, форма заявки и подготовка к запуску.'
     : tariff === 'Стандарт'
