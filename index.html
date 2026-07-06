@@ -3,9 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>
-			Лендинги под заявки для малого бизнеса, экспертов и услуг
-		</title>
+		<title>Лендинги под заявки для малого бизнеса, экспертов и услуг</title>
 		<meta
 			name="description"
 			content="Лендинги под заявки для малого бизнеса, экспертов и локальных услуг в России и СНГ: структура, тексты, адаптив, форма заявки и отправка в Telegram."
@@ -36,7 +34,13 @@
 			href="assets/favicon-16x16.png"
 		/>
 		<link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
-		<link rel="stylesheet" href="css/style.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Geologica:wght@700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap"
+			rel="stylesheet"
+		/>
+		<link rel="stylesheet" href="css/style.css?v=20260706-about-cta" />
 		<script type="application/ld+json">
 			{
 				"@context": "https://schema.org",
@@ -70,18 +74,29 @@
 				<nav class="nav" data-nav aria-label="Основная навигация">
 					<a href="#services">Услуги</a>
 					<a href="#cases">Кейсы</a>
+					<a href="#landing-blocks">Блоки</a>
 					<a href="#pricing">Тарифы</a>
 					<a href="#calculator">Калькулятор</a>
 					<a href="#process">Этапы</a>
 					<a href="#faq">FAQ</a>
 					<a href="#contacts">Контакты</a>
 				</nav>
-				<a
-					class="btn btn--small btn--primary header__cta"
-					href="#lead"
-					data-cta="header"
-					>Получить мини-разбор</a
-				>
+				<div class="header__actions">
+					<a
+						class="header__telegram"
+						href="https://t.me/Garun_mp4"
+						data-cta="header_telegram"
+						target="_blank"
+						rel="noopener"
+						>Telegram</a
+					>
+					<a
+						class="btn btn--small btn--primary header__cta"
+						href="#mini-audit"
+						data-cta="header_mini_audit"
+						>Получить мини-разбор</a
+					>
+				</div>
 				<button
 					class="menu-toggle"
 					type="button"
@@ -97,11 +112,15 @@
 			<div class="mobile-menu" id="mobile-menu" data-mobile-menu hidden>
 				<a href="#services">Услуги</a>
 				<a href="#cases">Кейсы</a>
+				<a href="#landing-blocks">Блоки</a>
 				<a href="#pricing">Тарифы</a>
 				<a href="#calculator">Калькулятор</a>
 				<a href="#process">Этапы</a>
 				<a href="#faq">FAQ</a>
 				<a href="#contacts">Контакты</a>
+				<a href="https://t.me/Garun_mp4" data-cta="mobile_telegram"
+					>Написать в Telegram</a
+				>
 				<a class="btn btn--primary" href="#lead" data-cta="mobile_menu"
 					>Получить мини-разбор</a
 				>
@@ -150,7 +169,9 @@
 							<li>
 								<strong>01</strong><span>Понятный оффер и порядок блоков</span>
 							</li>
-							<li><strong>02</strong><span>Верстка под телефон и desktop</span></li>
+							<li>
+								<strong>02</strong><span>Верстка под телефон и desktop</span>
+							</li>
 							<li>
 								<strong>03</strong><span>Форма, квиз или калькулятор</span>
 							</li>
@@ -186,9 +207,9 @@
 					<div class="section-head">
 						<h2>Кому я могу помочь</h2>
 						<p>
-							Чаще всего ко мне приходят, когда нужно быстро и понятно
-							упаковать одну услугу, направление или рекламную кампанию в
-							отдельную страницу.
+							Чаще всего ко мне приходят, когда нужно быстро и понятно упаковать
+							одну услугу, направление или рекламную кампанию в отдельную
+							страницу.
 						</p>
 					</div>
 					<div class="grid grid--3">
@@ -213,7 +234,9 @@
 						>
 							<span class="icon">02</span>
 							<h3>Косметологи и массажисты</h3>
-							<p>Объяснить услуги, цены, доверие и привести человека к записи.</p>
+							<p>
+								Объяснить услуги, цены, доверие и привести человека к записи.
+							</p>
 						</button>
 						<button
 							class="info-card as-button"
@@ -233,7 +256,9 @@
 						>
 							<span class="icon">04</span>
 							<h3>Юристы и бухгалтеры</h3>
-							<p>Простым языком объяснить услугу, порядок работы и стоимость.</p>
+							<p>
+								Простым языком объяснить услугу, порядок работы и стоимость.
+							</p>
 						</button>
 						<button
 							class="info-card as-button"
@@ -243,9 +268,7 @@
 						>
 							<span class="icon">05</span>
 							<h3>Репетиторы и онлайн-школы</h3>
-							<p>
-								Упаковать программу, формат занятий, тарифы и форму записи.
-							</p>
+							<p>Упаковать программу, формат занятий, тарифы и форму записи.</p>
 						</button>
 						<button
 							class="info-card as-button"
@@ -298,7 +321,9 @@
 								<li>принимаете заявки в Telegram, VK или WhatsApp;</li>
 								<li>продаёте одну основную услугу;</li>
 								<li>хотите отдельную страницу вместо хаотичной соцсети;</li>
-								<li>хотите показать цены, отзывы, этапы и форму в одном месте.</li>
+								<li>
+									хотите показать цены, отзывы, этапы и форму в одном месте.
+								</li>
 							</ul>
 						</div>
 					</div>
@@ -479,9 +504,7 @@
 				<div class="container">
 					<div class="section-head">
 						<p class="section-kicker">Преимущества</p>
-						<h2>
-							Почему лендинг будет удобен не только сейчас, но и после запуска
-						</h2>
+						<h2>Почему лендинг будет удобен в запуске и доработках</h2>
 						<p>
 							Я делаю сайт так, чтобы его можно было быстро открыть, удобно
 							смотреть с телефона, дорабатывать и использовать как рабочий
@@ -557,8 +580,8 @@
 						<h2>Из каких блоков будет состоять ваш лендинг</h2>
 						<p>
 							Набор секций зависит от ниши и цели, но обычно странице нужны
-							понятное предложение, доверие, ответы на вопросы и короткий путь
-							к заявке.
+							понятное предложение, доверие, ответы на вопросы и короткий путь к
+							заявке.
 						</p>
 					</div>
 					<div class="included-grid">
@@ -622,6 +645,65 @@
 				</div>
 			</section>
 
+			<section class="section" id="start-guide" data-section>
+				<div class="container">
+					<div class="section-head section-head--row">
+						<div>
+							<p class="section-kicker">С чего начать</p>
+							<h2>Выберите ближайшую ситуацию</h2>
+							<p>
+								Не обязательно сразу знать точный формат. Достаточно выбрать,
+								что сейчас ближе к вашей задаче — я подскажу следующий шаг.
+							</p>
+						</div>
+						<a class="btn btn--secondary" href="#mini-audit" data-cta="start_guide"
+							>Получить подсказку</a
+						>
+					</div>
+					<div class="start-grid">
+						<button
+							class="start-card as-button"
+							type="button"
+							data-prefill="service_type"
+							data-value="Лендинг под ключ"
+						>
+							<span>01</span>
+							<strong>Нет сайта или нужна отдельная страница</strong>
+							<small
+								>Начнём с мини-разбора: ниша, оффер, блоки, форма и примерный
+								бюджет.</small
+							>
+						</button>
+						<button
+							class="start-card as-button"
+							type="button"
+							data-prefill="service_type"
+							data-value="Доработка"
+						>
+							<span>02</span>
+							<strong>Сайт уже есть, но заявки идут слабо</strong>
+							<small
+								>Посмотрю первый экран, CTA, форму, доверие и путь клиента до
+								обращения.</small
+							>
+						</button>
+						<button
+							class="start-card as-button"
+							type="button"
+							data-prefill="service_type"
+							data-value="Калькулятор/квиз"
+						>
+							<span>03</span>
+							<strong>Запускаете рекламу или сложную услугу</strong>
+							<small
+								>Разберём, нужен ли квиз, калькулятор, несколько форм или
+								простая заявка.</small
+							>
+						</button>
+					</div>
+				</div>
+			</section>
+
 			<section class="section section--muted" id="pricing" data-section>
 				<div class="container">
 					<div class="section-head">
@@ -653,8 +735,10 @@
 							</button>
 						</article>
 						<article class="price-card price-card--featured">
-							<span class="label">Оптимальный вариант</span>
-							<h3>Бизнес</h3>
+							<div class="price-card__topline">
+								<h3>Бизнес</h3>
+								<span class="label">Оптимальный вариант</span>
+							</div>
 							<span>Полноценный лендинг под заявки</span>
 							<p>
 								Для услуги, эксперта, студии или локального бизнеса. 7–10
@@ -716,6 +800,13 @@
 							диапазон. Точную стоимость я назову после короткого обсуждения
 							задачи.
 						</p>
+						<div class="calc-note">
+							<strong>Важно:</strong>
+							<span
+								>калькулятор показывает порядок бюджета. На итог влияют тексты,
+								материалы, интерактив и срочность.</span
+							>
+						</div>
 					</div>
 					<form class="calculator" data-calculator novalidate>
 						<div class="calc-progress" aria-live="polite">
@@ -738,58 +829,6 @@
 							aria-label="Сводка выбранных параметров"
 						></aside>
 					</form>
-				</div>
-			</section>
-
-			<section class="section section--muted" id="included" data-section>
-				<div class="container">
-					<div class="section-head">
-						<p class="section-kicker">Что входит</p>
-						<h2>Что вы получаете в итоге</h2>
-						<p>
-							Разработка лендинга — это не только код. Важно собрать структуру,
-							проверить адаптив, настроить формы и подготовить сайт к реальному
-							использованию.
-						</p>
-					</div>
-					<div class="included-grid">
-						<ul class="check-list">
-							<li>Короткий разбор задачи и цели лендинга.</li>
-							<li>Логика блоков и порядок секций.</li>
-							<li>Адаптивная верстка под основные устройства.</li>
-							<li>
-								Интерактив на JavaScript: FAQ, табы, попапы, калькуляторы,
-								квизы.
-							</li>
-						</ul>
-						<ul class="check-list">
-							<li>Форма заявки с отправкой в Telegram-бот.</li>
-							<li>
-								Базовая SEO-структура: title, description, заголовки, alt для
-								изображений.
-							</li>
-							<li>Подготовка к публикации и проверка основных сценариев.</li>
-							<li>
-								Короткая инструкция: как пользоваться сайтом и куда приходят
-								заявки.
-							</li>
-						</ul>
-					</div>
-					<div class="business-result">
-						<strong>Можно добавить отдельно:</strong>
-						<span
-							>домен, хостинг, аналитика, CRM, сложная SEO-настройка,
-							дополнительные страницы, поддержка после запуска.</span
-						>
-					</div>
-					<div class="section-cta">
-						<a
-							class="btn btn--primary"
-							href="#lead"
-							data-cta="included_estimate"
-							>Получить оценку проекта</a
-						>
-					</div>
 				</div>
 			</section>
 
@@ -853,9 +892,112 @@
 							>
 						</li>
 					</ol>
+					<div class="process-guarantee">
+						<article>
+							<strong>Покажу промежуточный результат</strong>
+							<span>Вы видите страницу до финала и можете дать правки.</span>
+						</article>
+						<article>
+							<strong>Проверю на телефоне и desktop</strong>
+							<span>Смотрю основные экраны, форму, кнопки и критичные состояния.</span>
+						</article>
+						<article>
+							<strong>Без фейковых метрик</strong>
+							<span>Не придумываю конверсию, клиентов и результаты без данных.</span>
+						</article>
+						<article>
+							<strong>Можно дорабатывать после старта</strong>
+							<span>Страницу можно улучшать после рекламы, заявок и обратной связи.</span>
+						</article>
+					</div>
 					<div class="section-cta">
 						<a class="btn btn--primary" href="#lead" data-cta="process"
 							>Оставить заявку и обсудить этапы</a
+						>
+					</div>
+				</div>
+			</section>
+
+			<section class="section section--muted" id="improvements" data-section>
+				<div class="container">
+					<div class="section-head">
+						<p class="section-kicker">Улучшения</p>
+						<h2>Как я улучшаю страницу под заявки</h2>
+						<p>
+							Часто не нужно делать всё заново. Достаточно привести оффер,
+							порядок блоков и форму к понятному сценарию для клиента.
+						</p>
+					</div>
+					<div class="grid grid--3">
+						<article class="info-card">
+							<h3>Слабый первый экран → понятный оффер</h3>
+							<p>
+								Сразу объясняем, что вы предлагаете, кому это нужно и куда
+								нажать.
+							</p>
+						</article>
+						<article class="info-card">
+							<h3>Просто список услуг → структура под заявку</h3>
+							<p>
+								Выстраиваем страницу так, чтобы человек понял ценность, увидел
+								доверие и оставил контакт.
+							</p>
+						</article>
+						<article class="info-card">
+							<h3>Обычная форма → заявка в Telegram</h3>
+							<p>
+								Форма не просто собирает данные, а помогает быстро связаться с
+								клиентом.
+							</p>
+						</article>
+					</div>
+				</div>
+			</section>
+
+			<section class="section" id="about" data-section>
+				<div class="container about">
+					<div
+						class="profile-card"
+						role="img"
+						aria-label="Портрет разработчика лендингов"
+					></div>
+					<div class="about-content">
+						<p class="section-kicker">Кратко обо мне</p>
+						<div class="about-copy-card">
+							<div class="about-copy-card__head">
+								<span>Без лишних обещаний</span>
+								<h2>
+									Делаю аккуратные лендинги, которые можно запускать и
+									дорабатывать
+								</h2>
+							</div>
+							<div class="about-copy-card__body">
+								<p>
+									Я не обещаю магические продажи. Моя задача — собрать понятный,
+									быстрый и аккуратный лендинг, который можно отправлять клиентам,
+									запускать в рекламу и улучшать после старта.
+								</p>
+								<p>
+									Работаю онлайн. Если проект делается без конструктора, собираю
+									страницу на HTML, CSS и JavaScript: первый экран, блоки,
+									интерактив, адаптив и форму заявки. Важно не только как сайт
+									выглядит, но и как человек проходит путь от интереса до
+									обращения.
+								</p>
+							</div>
+						</div>
+						<div class="about-facts" aria-label="Формат работы">
+							<span>Работаю онлайн</span>
+							<span>Готовая страница под запуск</span>
+							<span>Адаптив и форма заявки</span>
+							<span>Квиз или калькулятор при необходимости</span>
+							<span>Без выдуманных метрик и обещаний</span>
+						</div>
+						<a
+							class="btn btn--secondary"
+							href="#mini-audit"
+							data-cta="about_mini_audit"
+							>Получить честный разбор</a
 						>
 					</div>
 				</div>
@@ -867,8 +1009,9 @@
 						<p class="section-kicker">Доверие</p>
 						<h2>Доказательства вместо громких обещаний</h2>
 						<p>
-							Если отзывов пока немного, доверие можно показать через подробные
-							кейсы, разбор решений, адаптив и демонстрацию работы интерфейса.
+							Пока собираю первые отзывы — поэтому подробно показываю процесс,
+							структуру и результат. Можно начать с небольшой задачи:
+							доработка, первый экран, форма или мини-лендинг.
 						</p>
 					</div>
 					<div class="grid grid--3">
@@ -896,8 +1039,8 @@
 					</div>
 					<div class="honest-note">
 						Не выдумываю метрики. Если у проекта нет статистики по заявкам,
-						показываю честный результат: готовый лендинг, понятная структура,
-						адаптив, интерактив и рабочая форма заявки.
+						показываю честный результат: готовую страницу, понятную структуру,
+						интерактив и рабочую форму заявки.
 					</div>
 				</div>
 			</section>
@@ -952,79 +1095,6 @@
 							><span>Можно настроить отправку данных под владельца сайта.</span>
 						</div>
 					</div>
-				</div>
-			</section>
-
-			<section class="section section--muted" id="mini-audit" data-section>
-				<div class="container mini-audit">
-					<div>
-						<p class="section-kicker">Мягкий старт</p>
-						<h2>Не уверены, какой лендинг вам нужен?</h2>
-						<p>
-							Опишите идею, нишу и задачу — я подскажу, какие блоки стоит
-							добавить, нужен ли калькулятор/квиз и какой формат будет
-							оптимальным.
-						</p>
-						<p class="microcopy">
-							Без навязчивых звонков. Отвечу в удобном формате и подскажу
-							следующий шаг.
-						</p>
-					</div>
-					<form
-						class="form"
-						data-lead-form
-						data-form-type="Мини-аудит"
-						novalidate
-					>
-						<input
-							type="text"
-							name="website"
-							tabindex="-1"
-							autocomplete="off"
-							class="hp-field"
-							aria-hidden="true"
-						/>
-						<label
-							>Имя *<input name="name" autocomplete="name" required
-						/></label>
-						<label
-							>Telegram / телефон / email *<input
-								name="contact"
-								autocomplete="email"
-								required
-						/></label>
-						<label
-							>Что хотите продвигать?<textarea
-								name="message"
-								rows="3"
-							></textarea>
-						</label>
-						<label
-							>Есть ли сайт или референсы?<input name="references"
-						/></label>
-						<label
-							>Когда хотите запустить?<select name="deadline">
-								<option>Срок обсуждается</option>
-								<option>Не срочно</option>
-								<option>В течение недели</option>
-								<option>В течение месяца</option>
-							</select></label
-						>
-						<!-- . -->
-						<label class="checkbox"
-							><input type="checkbox" name="consent" required />
-							<span
-								>Я соглашаюсь на обработку персональных данных и ознакомлен(а) с
-								<a href="privacy.html" target="_blank" rel="noopener"
-									>Политикой конфиденциальности</a
-								>.</span
-							></label
-						>
-						<button class="btn btn--primary" type="submit">
-							Получить мини-аудит идеи
-						</button>
-						<p class="form-status" aria-live="polite"></p>
-					</form>
 				</div>
 			</section>
 
@@ -1105,6 +1175,30 @@
 						</div>
 						<div class="faq-item">
 							<button type="button" aria-expanded="false">
+								Можно ли начать с небольшого мини-лендинга?
+							</button>
+							<div>
+								<p>
+									Да. Если вы только проверяете услугу, можно начать с короткой
+									страницы: первый экран, 3–5 ключевых блоков и форма заявки.
+									После первых откликов её можно расширить.
+								</p>
+							</div>
+						</div>
+						<div class="faq-item">
+							<button type="button" aria-expanded="false">
+								Что если я не знаю, какие блоки нужны?
+							</button>
+							<div>
+								<p>
+									Это нормально. На мини-разборе я посмотрю услугу, канал
+									продвижения и подскажу, какие блоки нужны обязательно, а что
+									можно не добавлять на старте.
+								</p>
+							</div>
+						</div>
+						<div class="faq-item">
+							<button type="button" aria-expanded="false">
 								Будет ли сайт адаптивным?
 							</button>
 							<div>
@@ -1156,21 +1250,19 @@
 				<div class="container final-cta__inner">
 					<div>
 						<h2>
-							Хотите лендинг, который понятно объяснит вашу услугу и будет готов
-							к заявкам?
+							Хотите понять, какой лендинг нужен под вашу услугу?
 						</h2>
 						<p>
-							Опишите задачу — я подскажу оптимальный формат, примерный бюджет и
-							что лучше заложить в структуру страницы.
+							Опишите задачу — я подскажу формат, примерный бюджет, нужные блоки
+							и куда вести клиента из рекламы, соцсетей или карт.
 						</p>
 						<p class="microcopy">
-							Заявки с сайта приходят в Telegram-бот. Вы можете указать удобный
-							способ связи — Telegram, телефон или email.
+							Можно оставить форму или написать напрямую в Telegram.
 						</p>
 					</div>
 					<div class="final-cta__actions">
-						<a class="btn btn--light" href="#lead" data-cta="final_lead"
-							>Оставить заявку</a
+						<a class="btn btn--light" href="#mini-audit" data-cta="final_mini_audit"
+							>Получить мини-разбор</a
 						>
 						<a
 							class="btn btn--secondary-dark"
@@ -1180,9 +1272,11 @@
 						>
 						<a
 							class="btn btn--secondary-dark"
-							href="#lead"
+							href="https://t.me/Garun_mp4"
 							data-cta="final_telegram"
-							>Написать по проекту</a
+							target="_blank"
+							rel="noopener"
+							>Написать в Telegram</a
 						>
 					</div>
 				</div>
@@ -1194,15 +1288,49 @@
 						<p class="section-kicker">Заявка</p>
 						<h2>Оставьте заявку — я изучу задачу и подскажу следующий шаг</h2>
 						<p>
-							Коротко опишите проект. Заявка придёт мне в Telegram-бот, а я
-							свяжусь с вами удобным способом.
+							Если нужен подробный запрос, заполните форму ниже. Заявка придёт
+							мне в Telegram-бот, а я свяжусь с вами удобным способом.
 						</p>
-						<div class="lead-context" data-lead-context>
-							<strong>Контекст заявки</strong>
-							<span
-								>Пока ничего не выбрано. Нажмите CTA в кейсе, тарифе или
-								калькуляторе — данные подставятся сюда.</span
+						<p class="microcopy">
+							Не хотите заполнять форму? Напишите напрямую в
+							<a href="https://t.me/Garun_mp4" target="_blank" rel="noopener"
+								>Telegram</a
+							>.
+						</p>
+						<div class="lead-quick" aria-label="Быстрый выбор задачи">
+							<button
+								type="button"
+								data-prefill="service_type"
+								data-value="Лендинг под ключ"
 							>
+								Нужен лендинг
+							</button>
+							<button type="button" data-prefill="service_type" data-value="Доработка">
+								Хочу доработать сайт
+							</button>
+							<button
+								type="button"
+								data-prefill="service_type"
+								data-value="Калькулятор/квиз"
+							>
+								Нужен калькулятор/квиз
+							</button>
+						</div>
+						<div class="lead-context" data-lead-context>
+							<strong>Можно оставить заявку сразу</strong>
+							<span
+								>Если уже смотрели тариф, кейс или расчёт, я увижу выбранный
+								вариант в заявке.</span
+							>
+						</div>
+						<div class="lead-helper">
+							<strong>Что можно написать в заявке</strong>
+							<ul>
+								<li>какую услугу хотите продвигать;</li>
+								<li>есть ли сайт, соцсеть или пример;</li>
+								<li>куда хотите вести клиентов: реклама, VK, Telegram, Авито или карты.</li>
+							</ul>
+							<span>Можно коротко: ниша + ссылка + удобный контакт.</span>
 						</div>
 					</div>
 					<form
@@ -1246,6 +1374,7 @@
 								<option>Верстка по макету</option>
 								<option>Доработка</option>
 								<option>Калькулятор/квиз</option>
+								<option>Мини-аудит страницы</option>
 								<option>Не знаю</option>
 							</select></label
 						>
@@ -1312,19 +1441,23 @@
 					</a>
 					<p>
 						Если не хотите заполнять подробную форму, оставьте короткую заявку.
-						Можно отправить ссылку на сайт, референсы или краткое описание
-						задачи.
+						Можно отправить ссылку на сайт, страницу в соцсетях или краткое
+						описание услуги.
 					</p>
 				</div>
 				<nav aria-label="Навигация в footer">
 					<a href="#services">Услуги</a>
 					<a href="#cases">Кейсы</a>
+					<a href="#landing-blocks">Блоки лендинга</a>
 					<a href="#pricing">Тарифы</a>
 					<a href="#calculator">Калькулятор</a>
 					<a href="#faq">FAQ</a>
 				</nav>
 				<address>
-					<a href="#lead">Оставить заявку на сайте</a>
+					<a href="#mini-audit">Получить мини-разбор</a>
+					<a href="https://t.me/Garun_mp4" target="_blank" rel="noopener"
+						>Написать в Telegram</a
+					>
 					<span>Связь: Telegram, телефон или email через форму</span>
 					<span>Формат работы: онлайн</span>
 				</address>
@@ -1338,8 +1471,8 @@
 			</div>
 		</footer>
 
-		<a class="sticky-mobile-cta" href="#calculator" data-cta="sticky_mobile"
-			>Рассчитать стоимость</a
+		<a class="sticky-mobile-cta" href="#mini-audit" data-cta="sticky_mobile"
+			>Получить мини-разбор</a
 		>
 
 		<div class="modal" data-case-modal hidden>

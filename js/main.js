@@ -1,4 +1,4 @@
-const TELEGRAM_USERNAME = '';
+const TELEGRAM_USERNAME = 'Garun_mp4';
 const LEAD_ENDPOINT = '/api/send-lead';
 
 // Frontend sends заявки to a Vercel Serverless Function.
@@ -11,6 +11,7 @@ const leadState = {
   source_cta: '',
   selected_case: '',
   selected_tariff: '',
+  service_type: '',
   calculator_result: '',
   calculator_answers: '',
 };
@@ -33,6 +34,8 @@ const cases = [
       'Форма заявки передаёт обращение через Telegram',
     ],
     features: ['Квиз/расчёт стоимости', 'Блок проектов домов', 'Договор и поэтапная оплата', 'Форма с согласием'],
+    blocks: ['Первый экран', 'Проекты домов', 'Этапы строительства', 'Гарантии', 'FAQ', 'Форма расчёта'],
+    functionality: ['Квиз/расчёт стоимости', 'Форма заявки', 'Telegram-заявка', 'Адаптив'],
   },
   {
     id: 'mos-reg-guide',
@@ -51,6 +54,8 @@ const cases = [
       'Форма учитывает параметры квиза и отправляет их в заявку',
     ],
     features: ['Квиз-подбор', 'Бонус-чеклист', 'Форма консультации', 'Telegram/WhatsApp'],
+    blocks: ['Первый экран', 'Для кого услуга', 'Виды регистрации', 'Стоимость', 'Документы', 'FAQ'],
+    functionality: ['Квиз-подбор', 'Форма консультации', 'Передача параметров квиза', 'Адаптив'],
   },
   {
     id: 'farm-milk',
@@ -69,6 +74,8 @@ const cases = [
       'Все обращения направляются напрямую в Telegram',
     ],
     features: ['Статический лендинг', 'Telegram как канал заказа', 'Фокус на доверии', 'Лёгкая структура'],
+    blocks: ['Первый экран', 'Преимущества продукта', 'Происхождение', 'Качество', 'Отзывы', 'FAQ'],
+    functionality: ['Кнопки связи', 'Telegram-заказ', 'Лёгкая статическая страница', 'Адаптив'],
   },
   {
     id: 'ceiling-premium',
@@ -87,6 +94,8 @@ const cases = [
       'Подчёркнуты договор, фиксация сметы и гарантия',
     ],
     features: ['Калькулятор стоимости', 'Карточки фактур', 'Галерея примеров', 'Форма с согласием'],
+    blocks: ['Первый экран', 'Виды потолков', 'Калькулятор', 'Примеры работ', 'Этапы', 'Форма замера'],
+    functionality: ['Калькулятор стоимости', 'Форма заявки', 'Галерея', 'Адаптив'],
   },
   {
     id: 'studio-18',
@@ -105,6 +114,8 @@ const cases = [
       'Страница подготовлена как посадочная для локальной услуги',
     ],
     features: ['Запись на услугу', 'Локальный бизнес', 'Контакты в первом экране', 'Визуальная подача'],
+    blocks: ['Первый экран', 'Услуги', 'Преимущества', 'Контакты', 'CTA на запись'],
+    functionality: ['Кнопки записи', 'Быстрые контакты', 'Навигация по странице', 'Адаптив'],
   },
   {
     id: 'bani-moscow',
@@ -123,6 +134,8 @@ const cases = [
       'Сценарий ведёт пользователя к расчёту стоимости',
     ],
     features: ['Расчёт стоимости', 'Каталог/модели', 'Локальная услуга', 'FAQ и этапы'],
+    blocks: ['Первый экран', 'Каталог моделей', 'Комплектации', 'Этапы', 'FAQ', 'Форма расчёта'],
+    functionality: ['Расчёт стоимости', 'Каталог/модели', 'Форма заявки', 'Адаптив'],
   },
 ];
 
@@ -239,6 +252,10 @@ function setLeadState(key, value) {
   if (!key || value === undefined) return;
   leadState[key] = value;
   qsa(`[name="${key}"]`).forEach((field) => {
+    if (field.tagName === 'SELECT') {
+      const hasOption = [...field.options].some((option) => option.value === value || option.textContent.trim() === value);
+      if (!hasOption) return;
+    }
     field.value = value;
   });
   renderLeadContext();
@@ -251,18 +268,42 @@ function scrollToLead() {
 function renderLeadContext() {
   const context = qs('[data-lead-context]');
   if (!context) return;
+  const sourceLabel = formatLeadSource(leadState.source_cta);
   const entries = [
-    ['CTA', leadState.source_cta],
-    ['Кейс', leadState.selected_case],
-    ['Тариф', leadState.selected_tariff],
-    ['Расчёт', leadState.calculator_result],
+    ['Выбран тариф', leadState.selected_tariff],
+    ['Похожий пример', leadState.selected_case],
+    ['Предварительный расчёт', leadState.calculator_result],
+    ['Интересует', leadState.service_type],
+    ['Переход из блока', sourceLabel],
   ].filter((entry) => entry[1]);
 
   const text = entries.length
     ? entries.map(([label, value]) => `${label}: ${value}`).join(' · ')
-    : 'Пока ничего не выбрано. Нажмите CTA в кейсе, тарифе или калькуляторе — данные подставятся сюда.';
+    : 'Если уже смотрели тариф, кейс или расчёт, я увижу выбранный вариант в заявке.';
 
-  context.innerHTML = `<strong>Контекст заявки</strong><span>${escapeHtml(text)}</span>`;
+  const title = entries.length ? 'Заявка по выбранному формату' : 'Можно оставить заявку сразу';
+  context.innerHTML = `<strong>${title}</strong><span>${escapeHtml(text)}</span>`;
+}
+
+function formatLeadSource(value) {
+  if (!value || value.startsWith('tariff_') || value.startsWith('service_') || value.startsWith('case_')) return '';
+  const labels = {
+    hero_mini_audit: 'мини-разбор',
+    hero_cases: 'примеры работ',
+    hero_calculator: 'калькулятор стоимости',
+    header_mini_audit: 'кнопка в шапке',
+    nav_telegram: 'Telegram',
+    mini_audit: 'мини-аудит',
+    mini_audit_cta: 'мини-аудит',
+    audit_telegram: 'Telegram',
+    final_mini_audit: 'финальный блок',
+    final_calculator: 'калькулятор стоимости',
+    final_telegram: 'Telegram',
+    sticky_mobile: 'мобильная кнопка',
+    about_mini_audit: 'блок обо мне',
+    calculator_submit: 'калькулятор стоимости',
+  };
+  return labels[value] || value.replaceAll('_', ' ');
 }
 
 function escapeHtml(value) {
@@ -302,12 +343,33 @@ function initHeader() {
   const menu = qs('[data-mobile-menu]');
   const links = qsa('a[href^="#"]');
   const stickyCta = qs('.sticky-mobile-cta');
+  const stickyContexts = [
+    ['#cases', { href: '#lead', text: 'Хочу похожий лендинг', cta: 'sticky_cases' }],
+    ['#pricing', { href: '#lead', text: 'Обсудить тариф', cta: 'sticky_pricing' }],
+    ['#calculator', { href: '#calculator', text: 'Получить расчёт', cta: 'sticky_calculator' }],
+    ['#start-guide', { href: '#mini-audit', text: 'Подобрать формат', cta: 'sticky_start_guide' }],
+  ];
+
+  const getStickyContext = () => {
+    const current = stickyContexts.find(([selector]) => {
+      const section = qs(selector);
+      if (!section) return false;
+      const rect = section.getBoundingClientRect();
+      return rect.top < window.innerHeight * 0.62 && rect.bottom > window.innerHeight * 0.24;
+    });
+    return current?.[1] || { href: '#mini-audit', text: 'Получить мини-разбор', cta: 'sticky_mobile' };
+  };
 
   const syncHeader = () => {
     header?.classList.toggle('is-scrolled', window.scrollY > 80);
     const hero = qs('#hero');
     if (stickyCta && hero) {
-      const avoidSelectors = ['#calculator', '#mini-audit', '#final', '#lead', '#contacts'];
+      const context = getStickyContext();
+      stickyCta.href = context.href;
+      stickyCta.textContent = context.text;
+      stickyCta.dataset.cta = context.cta;
+
+      const avoidSelectors = ['#mini-audit', '#final', '#lead', '#contacts'];
       const isInAvoidArea = avoidSelectors.some((selector) => {
         const section = qs(selector);
         if (!section) return false;
@@ -365,7 +427,9 @@ function renderCases() {
   const grid = qs('[data-cases-grid]');
   if (!grid) return;
 
-  grid.innerHTML = cases.map((item, index) => `
+  grid.innerHTML = cases.map((item, index) => {
+    const tags = (item.functionality || item.features).slice(0, 3);
+    return `
     <article class="case-card" aria-labelledby="case-title-${item.id}">
       <a class="case-card__image" href="${item.url}" target="_blank" rel="noopener" aria-label="Открыть живой сайт кейса ${escapeHtml(item.shortTitle)}">
         <img src="${item.image}" alt="Скриншот лендинга ${escapeHtml(item.title)}" width="1898" height="1079" loading="lazy">
@@ -375,10 +439,13 @@ function renderCases() {
           <span class="case-card__number">${String(index + 1).padStart(2, '0')}</span>
           <span class="label">${escapeHtml(item.niche)}</span>
         </div>
+        <div class="case-card__tags" aria-label="Ключевые элементы кейса">
+          ${tags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join('')}
+        </div>
         <h3 id="case-title-${item.id}">${escapeHtml(item.title)}</h3>
         <p><strong>Задача:</strong> ${escapeHtml(item.cardText)}</p>
-        <ul class="case-card__features" aria-label="Особенности кейса">
-          ${item.features.slice(0, 4).map((feature) => `<li>${escapeHtml(feature)}</li>`).join('')}
+        <ul class="case-card__features" aria-label="Функциональность кейса">
+          ${(item.functionality || item.features).slice(0, 4).map((feature) => `<li>${escapeHtml(feature)}</li>`).join('')}
         </ul>
         <div class="case-card__actions">
           <a class="btn btn--secondary" href="${item.url}" target="_blank" rel="noopener">Смотреть сайт</a>
@@ -387,7 +454,8 @@ function renderCases() {
         </div>
       </div>
     </article>
-  `).join('');
+  `;
+  }).join('');
 }
 
 function initCaseModal() {
@@ -419,6 +487,10 @@ function initCaseModal() {
           <p><strong>Задача проекта:</strong> ${escapeHtml(item.cardText)}</p>
           <h3>Что было сделано</h3>
           <ul class="check-list">${item.done.map((text) => `<li>${escapeHtml(text)}</li>`).join('')}</ul>
+          <h3>Блоки на лендинге</h3>
+          <p>${escapeHtml((item.blocks || []).join(' · '))}</p>
+          <h3>Функциональность</h3>
+          <p>${escapeHtml((item.functionality || item.features).join(' · '))}</p>
           <h3>Ключевые особенности</h3>
           <p>${escapeHtml(item.features.join(' · '))}</p>
           <h3>Результат</h3>
@@ -490,6 +562,77 @@ function initPrefillButtons() {
   });
 }
 
+function initRevealAnimations() {
+  if (!('IntersectionObserver' in window)) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const revealGroups = qsa('[data-section], .footer');
+  const itemSelector = [
+    '.section-head',
+    '.hero__content',
+    '.mini-audit > *',
+    '.split > *',
+    '.about > *',
+    '.lead-layout > *',
+    '.faq-layout > *',
+    '.final-cta__inner > *',
+    '.info-card',
+    '.service-card',
+    '.case-card',
+    '.price-card',
+    '.proof-card',
+    '.start-card',
+    '.process-guarantee article',
+    '.included-grid > *',
+    '.channel-list span',
+    '.timeline li',
+    '.calc-note',
+    '.calculator',
+    '.form',
+    '.lead-quick',
+    '.lead-helper',
+    '.faq-item',
+    '.business-result',
+    '.honest-note',
+  ].join(',');
+
+  const revealItems = [];
+  revealGroups.forEach((group) => {
+    const items = qsa(itemSelector, group)
+      .filter((item) => item.offsetParent !== null && !item.closest('.modal'));
+    const targets = items.length ? items : [group];
+
+    targets.forEach((item, index) => {
+      if (item.dataset.reveal) return;
+      item.dataset.reveal = '';
+      item.style.setProperty('--reveal-delay', `${Math.min(index, 8) * 70}ms`);
+      revealItems.push(item);
+    });
+  });
+
+  revealItems.forEach((item) => {
+    const rect = item.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.94) item.classList.add('is-revealed');
+  });
+
+  document.documentElement.classList.add('reveal-enabled');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-revealed');
+      observer.unobserve(entry.target);
+    });
+  }, {
+    rootMargin: '0px 0px -12% 0px',
+    threshold: 0.12,
+  });
+
+  revealItems
+    .filter((item) => !item.classList.contains('is-revealed'))
+    .forEach((item) => observer.observe(item));
+}
+
 function getLabel(step, value) {
   const option = step.options?.find(([key]) => key === value);
   return option ? option[1] : value;
@@ -541,8 +684,24 @@ function renderCalculator() {
   renderCalcSummary();
 }
 
+function buildCalcDrivers() {
+  const importantKeys = ['task', 'blocks', 'features', 'content', 'deadline'];
+  return calculatorSteps
+    .filter((step) => importantKeys.includes(step.key))
+    .map((step) => {
+      const value = calcState.answers[step.key];
+      if (!value || (Array.isArray(value) && !value.length)) return '';
+      const label = Array.isArray(value)
+        ? value.map((entry) => getLabel(step, entry)).join(', ')
+        : getLabel(step, value);
+      return `<li><strong>${escapeHtml(step.title.replace('?', ''))}:</strong> ${escapeHtml(label)}</li>`;
+    })
+    .filter(Boolean);
+}
+
 function renderCalcResult(container, next) {
   const result = calcState.result;
+  const drivers = buildCalcDrivers();
   next.textContent = 'Отправить расчёт в Telegram';
   container.innerHTML = `
     <div class="calc-result">
@@ -550,6 +709,7 @@ function renderCalcResult(container, next) {
       <strong>${escapeHtml(result.range)}</strong>
       <p>По выбранным параметрам вам подойдёт тариф “${escapeHtml(result.tariff)}”.</p>
       <p>${escapeHtml(result.includes)}</p>
+      ${drivers.length ? `<ul class="calc-result__details">${drivers.join('')}</ul>` : ''}
       <p>Это предварительная оценка. После короткого обсуждения я уточню объём, сроки и назову точную стоимость.</p>
       <button class="btn btn--secondary" type="button" data-prefill="calculator_result" data-value="${escapeHtml(result.range)}">Отправить расчёт и получить точную оценку</button>
     </div>
@@ -621,10 +781,10 @@ function calculateEstimate() {
   const urgency = a.deadline === 'fast' ? 1.2 : 1;
   const low = (base + blockAdd + designAdd + featureAdd + contentAdd) * urgency * ESTIMATE_DISCOUNT;
   const high = low * 1.28;
-  const tariff = high < TARIFF_THRESHOLDS.startMax ? 'Старт' : high < TARIFF_THRESHOLDS.standardMax ? 'Стандарт' : 'Расширенный';
+  const tariff = high < TARIFF_THRESHOLDS.startMax ? 'Старт' : high < TARIFF_THRESHOLDS.standardMax ? 'Бизнес' : 'Продажи+';
   const includes = tariff === 'Старт'
     ? 'В проект войдут базовые блоки, адаптивная верстка, форма заявки и подготовка к запуску.'
-    : tariff === 'Стандарт'
+    : tariff === 'Бизнес'
       ? 'В проект войдут 7–10 блоков, адаптивная верстка, форма заявки, базовый интерактив, подключение отправки в Telegram и подготовка к запуску.'
       : 'В проект войдут расширенная структура, интерактив, калькулятор/квиз при необходимости, формы и подготовка к запуску.';
 
@@ -776,7 +936,9 @@ function initForms() {
         errors.push('подтвердите согласие с политикой');
         consentField.setAttribute('aria-invalid', 'true');
       }
-      if (Date.now() - startedAt < 1200) errors.push('попробуйте отправить форму ещё раз через секунду');
+      if (!errors.length && Date.now() - startedAt < 1200) {
+        errors.push('попробуйте отправить форму ещё раз через секунду');
+      }
 
       if (errors.length) {
         status.textContent = `Проверьте форму: ${errors.join(', ')}.`;
@@ -807,13 +969,13 @@ function initForms() {
         status.classList.add('is-success');
         setTimeout(() => {
           submit.disabled = false;
-          submit.textContent = form.dataset.formType === 'Мини-аудит' ? 'Получить мини-аудит идеи' : 'Отправить заявку';
+          submit.textContent = form.dataset.formType === 'Мини-аудит' ? 'Получить мини-аудит' : 'Отправить заявку';
         }, 10000);
       } catch {
         status.innerHTML = `Похоже, возникла техническая ошибка. Проверьте контакт и попробуйте ещё раз. ${telegramFallbackHtml()}`;
         status.classList.add('is-error');
         submit.disabled = false;
-        submit.textContent = form.dataset.formType === 'Мини-аудит' ? 'Получить мини-аудит идеи' : 'Отправить заявку';
+        submit.textContent = form.dataset.formType === 'Мини-аудит' ? 'Получить мини-аудит' : 'Отправить заявку';
       }
     });
   });
@@ -840,4 +1002,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initForms();
   hydrateHiddenFields();
   renderLeadContext();
+  initRevealAnimations();
 });

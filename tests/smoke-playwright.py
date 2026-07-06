@@ -20,7 +20,7 @@ def run():
             launch_options['executable_path'] = CHROMIUM
         browser = p.chromium.launch(**launch_options)
 
-        for viewport in [{'width': 1440, 'height': 1000}, {'width': 390, 'height': 844}]:
+        for viewport in [{'width': 1440, 'height': 1000}, {'width': 768, 'height': 1024}, {'width': 390, 'height': 844}]:
             page = browser.new_page(viewport=viewport)
             console_errors = []
             page.on('console', lambda msg: console_errors.append(msg.text) if msg.type in ['error', 'warning'] else None)
@@ -30,6 +30,10 @@ def run():
             assert page.title(), 'Page title is empty'
             assert page.locator('h1').count() == 1, 'Page should have exactly one h1'
             assert page.locator('[data-cases-grid] .case-card').count() == 6, 'All 6 cases should render'
+            expect(page.locator('#hero .btn').first).to_have_attribute('href', '#mini-audit')
+            expect(page.locator('#landing-blocks')).to_be_visible()
+            expect(page.locator('#channels')).to_be_visible()
+            assert page.locator('a[href="https://t.me/Garun_mp4"]').count() >= 1, 'Telegram direct link should be present'
             assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth + 1'), 'Page has horizontal overflow'
             assert console_errors == [], f'Console/page errors: {console_errors}'
             page.close()
@@ -49,6 +53,7 @@ def run():
         page.locator('[data-open-case]').first.click()
         expect(page.locator('[data-case-modal]')).to_be_visible()
         expect(page.locator('#case-modal-title')).to_contain_text('Как был собран')
+        expect(page.locator('[data-modal-content]')).to_contain_text('Функциональность')
         page.keyboard.press('Escape')
         expect(page.locator('[data-case-modal]')).to_be_hidden()
         page.locator('[data-case-lead]').first.click()
