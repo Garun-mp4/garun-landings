@@ -33,7 +33,7 @@ def run():
             expect(page.locator('#hero .btn').first).to_have_attribute('href', '#mini-audit')
             expect(page.locator('#landing-blocks')).to_be_visible()
             expect(page.locator('#channels')).to_be_visible()
-            assert page.locator('a[href="https://t.me/Garun_mp4"]').count() >= 1, 'Telegram direct link should be present'
+            assert page.locator('a[href="https://t.me/garun_web"]').count() >= 1, 'Telegram direct link should be present'
             assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth + 1'), 'Page has horizontal overflow'
             assert console_errors == [], f'Console/page errors: {console_errors}'
             page.close()
