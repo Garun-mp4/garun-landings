@@ -29,7 +29,9 @@ def run():
 
             assert page.title(), 'Page title is empty'
             assert page.locator('h1').count() == 1, 'Page should have exactly one h1'
-            assert page.locator('[data-cases-grid] .case-card').count() == 7, 'All 7 cases should render'
+            assert page.locator('[data-cases-grid] .case-card').count() == 8, 'All 8 cases should render'
+            assert page.locator('[data-open-case="razor-premium"]').count() == 1, 'Razor case should render'
+            expect(page.locator('[data-cases-grid]')).to_contain_text('RAZOR / 01')
             expect(page.locator('#hero .btn').first).to_have_attribute('href', '#mini-audit')
             expect(page.locator('#landing-blocks')).to_be_visible()
             expect(page.locator('#channels')).to_be_visible()
