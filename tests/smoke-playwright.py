@@ -29,7 +29,9 @@ def run():
 
             assert page.title(), 'Page title is empty'
             assert page.locator('h1').count() == 1, 'Page should have exactly one h1'
-            assert page.locator('[data-cases-grid] .case-card').count() == 8, 'All 8 cases should render'
+            assert page.locator('[data-cases-grid] .case-card').count() == 9, 'All 9 cases should render'
+            assert page.locator('[data-open-case="velora"]').count() == 1, 'VELORA case should render'
+            expect(page.locator('[data-cases-grid]')).to_contain_text('VELORA')
             assert page.locator('[data-open-case="razor-premium"]').count() == 1, 'Razor case should render'
             expect(page.locator('[data-cases-grid]')).to_contain_text('RAZOR / 01')
             expect(page.locator('#hero .btn').first).to_have_attribute('href', '#mini-audit')
@@ -59,7 +61,7 @@ def run():
         page.keyboard.press('Escape')
         expect(page.locator('[data-case-modal]')).to_be_hidden()
         page.locator('[data-case-lead]').first.click()
-        expect(page.locator('[data-lead-context]')).to_contain_text('Astra House')
+        expect(page.locator('[data-lead-context]')).to_contain_text('VELORA')
 
         # FAQ accordion
         second_faq = page.locator('.faq-item button').nth(1)
