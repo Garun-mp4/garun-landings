@@ -32,6 +32,8 @@ def run():
             assert page.locator('[data-cases-grid] .case-card').count() == 9, 'All 9 cases should render'
             assert page.locator('[data-open-case="velora"]').count() == 1, 'VELORA case should render'
             expect(page.locator('[data-cases-grid]')).to_contain_text('VELORA')
+            expect(page.locator('[data-open-case="mos-reg-guide"]')).to_have_count(1)
+            expect(page.locator('article[aria-labelledby="case-title-mos-reg-guide"] img')).to_have_attribute('src', 'cases-img/mos-reg-guide.png')
             assert page.locator('[data-open-case="razor-premium"]').count() == 1, 'Razor case should render'
             expect(page.locator('[data-cases-grid]')).to_contain_text('RAZOR / 01')
             expect(page.locator('#hero .btn').first).to_have_attribute('href', '#mini-audit')
@@ -62,6 +64,11 @@ def run():
         expect(page.locator('[data-case-modal]')).to_be_hidden()
         page.locator('[data-case-lead]').first.click()
         expect(page.locator('[data-lead-context]')).to_contain_text('VELORA')
+
+        page.locator('[data-open-case="mos-reg-guide"]').click()
+        expect(page.locator('[data-modal-content]')).to_contain_text('Вкладки сценариев')
+        expect(page.locator('[data-modal-content]')).to_contain_text('Отдельный маршрут для иностранных граждан')
+        page.keyboard.press('Escape')
 
         # FAQ accordion
         second_faq = page.locator('.faq-item button').nth(1)
